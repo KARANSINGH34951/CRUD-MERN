@@ -15,13 +15,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   cors({
-    origin: "*",
+    origin: "*", //this will allow eveyone
   })
 );
 
-app.get("/", (req, res) => {
-  res.send("Welcome");
-});
 
 app.post("/create", async (req, res) => {
   const { name, email, password } = req.body;
