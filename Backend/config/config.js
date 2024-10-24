@@ -1,13 +1,14 @@
 const mongoose = require('mongoose');
+require('dotenv').config(); 
 
 const connectDB = async () => {
   try {
-    await mongoose.connect("mongodb://127.0.0.1:27017/crudmern");
-    console.log("Database connected..");
+    await mongoose.connect(process.env.MONGOOSE_API);
+    console.log("connected..");
   } catch (err) {
-    console.log("Error occurred while connecting to the database: ", err);
+    console.log("Error occurred while connecting to MongoDB Atlas: ", err);
     throw err;
   }
 };
 
-module.exports = { connectDB }; 
+module.exports = { connectDB };
