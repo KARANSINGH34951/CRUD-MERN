@@ -39,7 +39,7 @@ app.get("/read", async (req, res) => {
     const allUsers = await user.find({});
     res.json(allUsers);
   } catch (err) {
-    console.error("Error fetching users:", err);
+    
     res.status(500).json({ message: "Server error" });
   }
 });
@@ -62,7 +62,6 @@ app.patch("/edit/:id", async (req, res) => {
 
     res.json(updatedUser);
   } catch (err) {
-    console.error("Error updating user:", err);
     res.status(500).json({ message: "Server error" });
   }
 });
@@ -79,7 +78,6 @@ app.delete("/delete/:id", async (req, res) => {
 
     res.json({ message: "User deleted successfully" });
   } catch (err) {
-    console.error("Error deleting user:", err);
     res.status(500).json({ message: "Server error" });
   }
 });
