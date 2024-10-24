@@ -1,9 +1,9 @@
-const express = require('express');
-const cors =require("cors")
+const express = require("express");
+const cors = require("cors");
 
-const { connectDB } = require('./config/config');
-require('dotenv').config();
-const PORT=3000 || process.env.PORT;
+const { connectDB } = require("./config/config");
+require("dotenv").config();
+const PORT = 3000 || process.env.PORT;
 
 const user = require("./models/user");
 
@@ -13,30 +13,31 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cors({
-  origin: 'http://localhost:5173', 
-}));
-
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  })
+);
 
 app.get("/", (req, res) => {
   res.send("Welcome");
 });
 
-app.post("/create",async (req,res)=>{
-  const {name,email,password}= req.body;
-  const User= new user({
+app.post("/create", async (req, res) => {
+  const { name, email, password } = req.body;
+  const User = new user({
     name,
     email,
-    password
-  })
-  const saveduser=await User.save();
-  res.send("Created your account !")
-})
+    password,
+  });
+  const saveduser = await User.save();
+  res.send("Created your account !");
+});
 
 app.get("/read", async (req, res) => {
   try {
     const allUsers = await user.find({});
-    res.json(allUsers); 
+    res.json(allUsers);
   } catch (err) {
     console.error("Error fetching users:", err);
     res.status(500).json({ message: "Server error" });
@@ -45,7 +46,7 @@ app.get("/read", async (req, res) => {
 
 const startServer = async () => {
   try {
-    await connectDB(); 
+    await connectDB();
     app.listen(PORT, () => {
       console.log("Server running on port 3000...");
     });
