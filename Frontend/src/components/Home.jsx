@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; 
 
 const Home = () => {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
+  const navigate = useNavigate(); 
 
   const fetchData = async () => {
     try {
@@ -12,6 +14,20 @@ const Home = () => {
     } catch (err) {
       console.error("Error fetching data:", err);
       setError("Failed to fetch users");
+    }
+  };
+
+  const handleEdit = (userId) => {
+    navigate(`/edit/${userId}`);
+  };
+
+  const handleDelete = async (userId) => {
+    try {
+      await axios.delete(`http://localhost:3000/delete/${userId}`);
+      fetchData(); 
+    } catch (err) {
+      console.error("Error deleting user:", err);
+      setError("Failed to delete user");
     }
   };
 
@@ -36,22 +52,22 @@ const Home = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user, index) => (
-              <tr key={index} className="hover:bg-gray-50">
-                <td className="border border-gray-300 px-4 py-2">
-                  {user.name}
-                </td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {user.email}
-                </td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {user.password}
-                </td>
+            {users.map((user) => (
+              <tr key={user._id} className="hover:bg-gray-50">
+                <td className="border border-gray-300 px-4 py-2">{user.name}</td>
+                <td className="border border-gray-300 px-4 py-2">{user.email}</td>
+                <td className="border border-gray-300 px-4 py-2">{user.password}</td>
                 <td className="border border-gray-300 px-4 py-2 flex space-x-2">
-                  <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                  <button
+                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+                    onClick={() => handleEdit(user._id)} 
+                  >
                     Edit
                   </button>
-                  <button className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700 transition">
+                  <button
+                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700 transition"
+                    onClick={() => handleDelete(user._id)} 
+                  >
                     Delete
                   </button>
                 </td>

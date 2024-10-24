@@ -44,6 +44,47 @@ app.get("/read", async (req, res) => {
   }
 });
 
+app.patch("/edit/:id", async (req, res) => {
+  const { id } = req.params; 
+  const { name, email, password } = req.body; 
+
+  try {
+    
+    const updatedUser = await user.findByIdAndUpdate(
+      id,
+      { name, email, password },
+      { new: true } 
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json(updatedUser);
+  } catch (err) {
+    console.error("Error updating user:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+app.delete("/delete/:id", async (req, res) => {
+  const { id } = req.params; 
+
+  try {
+    const deletedUser = await user.findByIdAndDelete(id);
+
+    if (!deletedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json({ message: "User deleted successfully" });
+  } catch (err) {
+    console.error("Error deleting user:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
 const startServer = async () => {
   try {
     await connectDB();
