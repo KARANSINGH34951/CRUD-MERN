@@ -24,7 +24,6 @@ app.get("/", (req, res) => {
 
 app.post("/create",async (req,res)=>{
   const {name,email,password}= req.body;
-
   const User= new user({
     name,
     email,

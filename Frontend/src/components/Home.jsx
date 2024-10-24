@@ -31,6 +31,7 @@ const Home = () => {
             <div key={index}>
               <h1>{user.name}</h1>
               <h2>{user.email}</h2>
+              <h3>{user.password}</h3>
             </div>
           )
         })
