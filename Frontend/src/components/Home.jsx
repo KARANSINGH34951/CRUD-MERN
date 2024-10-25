@@ -9,7 +9,7 @@ const Home = () => {
 
   const fetchData = async () => {
     try {
-      const { data } = await axios.get("http://localhost:3000/user/read");
+      const { data } = await axios.get("https://crud-mern-jepl.onrender.com/user/read");
       setUsers(data);
     } catch (err) {
       console.error("Error fetching data:", err);
@@ -23,7 +23,7 @@ const Home = () => {
 
   const handleDelete = async (userId) => {
     try {
-      await axios.delete(`http://localhost:3000/user/delete/${userId}`);
+      await axios.delete(`https://crud-mern-jepl.onrender.com/user/delete/${userId}`);
       fetchData(); 
     } catch (err) {
       console.error("Error deleting user:", err);

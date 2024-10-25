@@ -24,7 +24,7 @@ const Signup = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:3000/user/create", {
+      const response = await axios.post("https://crud-mern-jepl.onrender.com/user/create", {
         name,
         email,
         password,
