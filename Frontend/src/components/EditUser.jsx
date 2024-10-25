@@ -16,7 +16,7 @@ const EditUser = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:3000/read/${id}`);
+        const { data } = await axios.get(`http://localhost:3000/user/read/${id}`);
         setUser(data);
       } catch (err) {
         console.error("Error fetching user data:", err);
@@ -32,7 +32,7 @@ const EditUser = () => {
     e.preventDefault(); 
 
     try {
-      await axios.patch(`http://localhost:3000/edit/${id}`, user);
+      await axios.patch(`http://localhost:3000/user/edit/${id}`, user);
       navigate("/"); 
     } catch (err) {
       console.error("Error updating user:", err);
