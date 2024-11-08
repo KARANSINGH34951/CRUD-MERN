@@ -1,63 +1,58 @@
-const user = require("../models/user");
-
+const User = require("../models/user"); 
 
 const createuser = async (req, res) => {
   const { name, email, password } = req.body;
-  const User = new user({
-    name,
-    email,
-    password,
-  });
-  const saveduser = await User.save();
-  res.send("Created your account !");
+  try {
+    const newUser = new User({
+      name,
+      email,
+      password,
+    });
+    const savedUser = await newUser.save();
+    res.status(201).json({ message: "Created your account!", user: savedUser });
+  } catch (err) {
+    res.status(500).json({ message: "Error creating user", error: err.message });
+  }
 };
 
-const readuser=async (req, res) => {
+const readuser = async (req, res) => {
   try {
-    const allUsers = await user.find({});
+    const allUsers = await User.find({});
     res.json(allUsers);
   } catch (err) {
-    
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error", error: err.message });
   }
-}
+};
 
-const edituser=async (req, res) => {
-  const { id } = req.params; 
-  const { name, email, password } = req.body; 
-
+const edituser = async (req, res) => {
+  const { id } = req.params;
+  const { name, email, password } = req.body;
   try {
-    
-    const updatedUser = await user.findByIdAndUpdate(
+    const updatedUser = await User.findByIdAndUpdate(
       id,
       { name, email, password },
-      { new: true } 
+      { new: true }
     );
-
     if (!updatedUser) {
       return res.status(404).json({ message: "User not found" });
     }
-
     res.json(updatedUser);
   } catch (err) {
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error", error: err.message });
   }
-}
+};
 
-const deleteuser=async (req, res) => {
-  const { id } = req.params; 
-
+const deleteuser = async (req, res) => {
+  const { id } = req.params;
   try {
-    const deletedUser = await user.findByIdAndDelete(id);
-
+    const deletedUser = await User.findByIdAndDelete(id);
     if (!deletedUser) {
       return res.status(404).json({ message: "User not found" });
     }
-
     res.json({ message: "User deleted successfully" });
   } catch (err) {
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error", error: err.message });
   }
-}
+};
 
 module.exports = { createuser, readuser, edituser, deleteuser };

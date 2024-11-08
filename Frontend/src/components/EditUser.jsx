@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom"; 
 
 const EditUser = () => {
+  
   const { id } = useParams(); 
   const navigate = useNavigate();
   const [user, setUser] = useState({
@@ -11,7 +12,6 @@ const EditUser = () => {
     password: "",
   });
   const [error, setError] = useState(null);
-
 
   useEffect(() => {
     const fetchUserData = async () => {
